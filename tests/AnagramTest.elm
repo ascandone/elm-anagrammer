@@ -37,6 +37,14 @@ suite =
             \() ->
                 Anagram.diff "abc" "efg"
                     |> Expect.equal ( "abc", "efg" )
+        , Test.test "should ignore whitespace in the left string" <|
+            \() ->
+                Anagram.diff "a " "a"
+                    |> Expect.equal ( "", "" )
+        , Test.test "should ignore whitespace in the right string" <|
+            \() ->
+                Anagram.diff "a" "a "
+                    |> Expect.equal ( "", "" )
         , Test.fuzz Fuzz.string "two equal strings are always anagrams" <|
             \s ->
                 Anagram.diff s s

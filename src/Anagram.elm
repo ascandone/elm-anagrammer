@@ -1,25 +1,36 @@
 module Anagram exposing (diff)
 
-import Multiset
+import Multiset exposing (Multiset)
+
+
+strToMultiset : String -> Multiset Char
+strToMultiset str =
+    str
+        |> String.filter (\ch -> ch /= ' ')
+        |> String.toList
+        |> Multiset.fromList
+
+
+strDiff : Multiset Char -> Multiset Char -> String
+strDiff a b =
+    Multiset.diff a b
+        |> Multiset.toList
+        |> String.fromList
 
 
 diff : String -> String -> ( String, String )
 diff source draft =
     let
         sourceMultiSet =
-            Multiset.fromList (String.toList source)
+            strToMultiset source
 
         draftMultiSet =
-            Multiset.fromList (String.toList draft)
+            strToMultiset draft
 
         sourceMinusDraft =
-            Multiset.diff sourceMultiSet draftMultiSet
-                |> Multiset.toList
-                |> String.fromList
+            strDiff sourceMultiSet draftMultiSet
 
         draftMinusSource =
-            Multiset.diff draftMultiSet sourceMultiSet
-                |> Multiset.toList
-                |> String.fromList
+            strDiff draftMultiSet sourceMultiSet
     in
     ( sourceMinusDraft, draftMinusSource )
