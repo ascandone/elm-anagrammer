@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class)
+import Ui.Input
 
 
 main : Program Flags Model Msg
@@ -50,5 +51,9 @@ subscriptions _ =
 
 view : Model -> Html Msg
 view _ =
-    div [ class "p-2 font-semibold text-gray-900" ]
-        [ text "Hello world!" ]
+    div [ class "p-2 max-w-sm text-gray-900" ]
+        [ Ui.Input.view
+            [ Ui.Input.placeholder "John Doe"
+            , Ui.Input.label "Name"
+            ]
+        ]
