@@ -83,7 +83,7 @@ view model =
         [ class "px-4 max-w-sm mx-auto"
         , class "flex flex-col items-center"
         ]
-        [ div [ class "h-6" ] []
+        [ div [ class "h-8" ] []
         , viewImage
         , div [ class "h-6" ] []
         , div [ class "w-full" ]
