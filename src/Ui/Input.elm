@@ -1,5 +1,6 @@
 module Ui.Input exposing
     ( Attribute
+    , autofocus
     , label
     , onInput
     , placeholder
@@ -25,6 +26,11 @@ attribute attr_ =
 placeholder : String -> Attribute msg
 placeholder =
     attribute << Html.Attributes.placeholder
+
+
+autofocus : Bool -> Attribute msg
+autofocus =
+    attribute << Html.Attributes.autofocus
 
 
 label : String -> Attribute msg

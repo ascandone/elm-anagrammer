@@ -67,6 +67,7 @@ view model =
                 [ Ui.Input.label "Name"
                 , Ui.Input.placeholder "John Doe"
                 , Ui.Input.value model.name
+                , Ui.Input.autofocus True
                 ]
             , div [ class "h-6" ] []
             , Ui.Input.view
