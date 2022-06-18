@@ -56,7 +56,7 @@ subscriptions _ =
 view : Model -> Html Msg
 view model =
     div
-        [ class "p-2 max-w-sm mx-auto"
+        [ class "px-4 max-w-sm mx-auto"
         , class "flex flex-col items-center"
         ]
         [ div [ class "h-6" ] []
