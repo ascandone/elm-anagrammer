@@ -82,21 +82,36 @@ view attributes =
         config =
             makeConfig attributes
     in
-    case config.label of
-        Nothing ->
-            viewInput config
+    Html.div []
+        [ case config.label of
+            Nothing ->
+                viewInput config
 
-        Just labelText ->
-            Html.label [ class "group" ]
-                [ viewLabelContent labelText config.validation
-                , viewInput config
-                ]
+            Just labelText ->
+                Html.label [ class "group" ]
+                    [ viewLabelContent labelText config.validation
+                    , viewInput config
+                    ]
+        , Html.div [ class "h-2" ]
+            [ case config.validation of
+                Just (Err reason) ->
+                    viewErrorMessage reason
+
+                _ ->
+                    Html.text ""
+            ]
+        ]
+
+
+viewErrorMessage : String -> Html msg
+viewErrorMessage reason =
+    Html.div [ class "ml-2 my-1 leading-none text-xs text-red-500 absolute" ] [ Html.text reason ]
 
 
 viewLabelContent : String -> Maybe (Result String ()) -> Html msg
 viewLabelContent labelText validation_ =
-    Html.span
-        [ class "ml-2 mb-1 leading-none"
+    Html.div
+        [ class "ml-2 mb-2 leading-none"
         , class <|
             case validation_ of
                 Nothing ->
