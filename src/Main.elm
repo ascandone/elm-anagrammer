@@ -21,12 +21,16 @@ type alias Flags =
 
 
 type alias Model =
-    {}
+    { name : String
+    , anagram : String
+    }
 
 
 init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( {}
+    ( { name = ""
+      , anagram = ""
+      }
     , Cmd.none
     )
 
@@ -50,10 +54,44 @@ subscriptions _ =
 
 
 view : Model -> Html Msg
-view _ =
-    div [ class "p-2 max-w-sm text-gray-900" ]
-        [ Ui.Input.view
-            [ Ui.Input.placeholder "John Doe"
-            , Ui.Input.label "Name"
+view model =
+    div
+        [ class "p-2 max-w-sm mx-auto"
+        , class "flex flex-col items-center"
+        ]
+        [ div [ class "h-6" ] []
+        , viewImage
+        , div [ class "h-6" ] []
+        , div [ class "w-full" ]
+            [ Ui.Input.view
+                [ Ui.Input.label "Name"
+                , Ui.Input.placeholder "John Doe"
+                , Ui.Input.value model.name
+                ]
+            , div [ class "h-6" ] []
+            , Ui.Input.view
+                [ Ui.Input.label "Anagram"
+                , Ui.Input.placeholder "hooned"
+                , Ui.Input.value model.name
+                ]
+            , div [ class "h-6" ] []
+            , div []
+                [ viewCharsLeft "abc"
+                ]
             ]
+        ]
+
+
+viewCharsLeft : String -> Html msg
+viewCharsLeft str =
+    div []
+        [ span [ class "text-gray-500" ] [ text "Chars left: " ]
+        , span [ class "text-gray-900" ] [ text str ]
+        ]
+
+
+viewImage : Html msg
+viewImage =
+    div [ class "w-64" ]
+        [ img [ Html.Attributes.src "https://i.imgur.com/xCXTHxx.jpg" ] []
         ]
