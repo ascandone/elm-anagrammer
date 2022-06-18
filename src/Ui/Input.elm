@@ -88,6 +88,6 @@ viewInput : Config msg -> Html msg
 viewInput config =
     Html.Extra.concatAttributes Html.input
         config.inputAttributes
-        [ class "group-hover:border-indigo-500 border px-4 py-2 transition-colors rounded-md w-full focus:ring ring-indigo-200 focus:outline-none focus:border-indigo-600"
+        [ class "group-hover:border-indigo-500 border px-4 py-2 transition-colors rounded-md w-full focus:ring ring-indigo-200 focus:outline-none focus:border-indigo-600 shadow-sm"
         ]
         []
