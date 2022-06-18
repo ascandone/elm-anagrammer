@@ -1,5 +1,6 @@
 module Main exposing (main)
 
+import Anagram
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class)
@@ -36,14 +37,20 @@ init _ =
 
 
 type Msg
-    = Noop
+    = InputName String
+    | InputAnagramDraft String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Noop ->
-            ( model
+        InputName value ->
+            ( { model | name = value }
+            , Cmd.none
+            )
+
+        InputAnagramDraft value ->
+            ( { model | anagram = value }
             , Cmd.none
             )
 
@@ -55,6 +62,10 @@ subscriptions _ =
 
 view : Model -> Html Msg
 view model =
+    let
+        ( availableChars, illegalChars ) =
+            Anagram.diff model.name model.anagram
+    in
     div
         [ class "px-4 max-w-sm mx-auto"
         , class "flex flex-col items-center"
@@ -68,27 +79,31 @@ view model =
                 , Ui.Input.placeholder "John Doe"
                 , Ui.Input.value model.name
                 , Ui.Input.autofocus True
+                , Ui.Input.onInput InputName
                 ]
             , div [ class "h-6" ] []
             , Ui.Input.view
                 [ Ui.Input.label "Anagram"
                 , Ui.Input.placeholder "hooned"
-                , Ui.Input.value model.name
+                , Ui.Input.value model.anagram
+                , Ui.Input.onInput InputAnagramDraft
                 ]
             , div [ class "h-6" ] []
-            , div []
-                [ viewCharsLeft "abc"
-                ]
+            , viewCharsLeft availableChars
             ]
         ]
 
 
 viewCharsLeft : String -> Html msg
 viewCharsLeft str =
-    div []
-        [ span [ class "text-gray-500" ] [ text "Chars left: " ]
-        , span [ class "text-gray-900" ] [ text str ]
-        ]
+    if String.isEmpty str then
+        text ""
+
+    else
+        div []
+            [ span [ class "text-gray-500" ] [ text "Chars left: " ]
+            , span [ class "text-gray-900" ] [ text str ]
+            ]
 
 
 viewImage : Html msg
