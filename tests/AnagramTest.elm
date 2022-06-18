@@ -12,7 +12,7 @@ suite =
         [ Test.test "should report when the second string has missing chars" <|
             \() ->
                 Anagram.diff "abZ" "ab"
-                    |> Expect.equal ( "Z", "" )
+                    |> Expect.equal ( "z", "" )
         , Test.test "should report when a char has been used too few times" <|
             \() ->
                 Anagram.diff "aaa" "a"
@@ -24,15 +24,15 @@ suite =
         , Test.test "should report when the second string has missing chars, even with swapped chars" <|
             \() ->
                 Anagram.diff "bZa" "ab"
-                    |> Expect.equal ( "Z", "" )
+                    |> Expect.equal ( "z", "" )
         , Test.test "should report when the first string has missing chars" <|
             \() ->
                 Anagram.diff "ab" "abZ"
-                    |> Expect.equal ( "", "Z" )
+                    |> Expect.equal ( "", "z" )
         , Test.test "should report when the first string has missing chars, even with swapped chars" <|
             \() ->
                 Anagram.diff "ab" "bZa"
-                    |> Expect.equal ( "", "Z" )
+                    |> Expect.equal ( "", "z" )
         , Test.test "should diff two strings with different letters" <|
             \() ->
                 Anagram.diff "abc" "efg"
@@ -45,6 +45,10 @@ suite =
             \() ->
                 Anagram.diff "a" "a "
                     |> Expect.equal ( "", "" )
+        , Test.test "should lowercase inputs" <|
+            \() ->
+                Anagram.diff "AB" "AC"
+                    |> Expect.equal ( "b", "c" )
         , Test.fuzz Fuzz.string "two equal strings are always anagrams" <|
             \s ->
                 Anagram.diff s s

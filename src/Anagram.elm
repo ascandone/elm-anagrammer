@@ -6,6 +6,7 @@ import Multiset exposing (Multiset)
 strToMultiset : String -> Multiset Char
 strToMultiset str =
     str
+        |> String.toLower
         |> String.filter (\ch -> ch /= ' ')
         |> String.toList
         |> Multiset.fromList
