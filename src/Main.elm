@@ -41,16 +41,21 @@ type Msg
     | InputAnagramDraft String
 
 
+filterInput : String -> String
+filterInput =
+    String.filter (\ch -> Char.isAlpha ch || ch == ' ')
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         InputName value ->
-            ( { model | name = value }
+            ( { model | name = filterInput value }
             , Cmd.none
             )
 
         InputAnagramDraft value ->
-            ( { model | anagram = value }
+            ( { model | anagram = filterInput value }
             , Cmd.none
             )
 
