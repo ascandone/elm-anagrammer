@@ -60,10 +60,23 @@ subscriptions _ =
     Sub.none
 
 
+getValidation : ( String, String ) -> Maybe (Result String ())
+getValidation anagramDiff =
+    case anagramDiff of
+        ( "", "" ) ->
+            Just (Ok ())
+
+        ( _, "" ) ->
+            Nothing
+
+        ( _, extraChars ) ->
+            Just (Err ("Extra chars: \"" ++ extraChars ++ "\""))
+
+
 view : Model -> Html Msg
 view model =
     let
-        ( availableChars, illegalChars ) =
+        (( availableChars, _ ) as anagramDiff) =
             Anagram.diff model.name model.anagram
     in
     div
@@ -84,9 +97,14 @@ view model =
             , div [ class "h-6" ] []
             , Ui.Input.view
                 [ Ui.Input.label "Anagram"
-                , Ui.Input.placeholder "hooned"
+                , Ui.Input.placeholder "doe john"
                 , Ui.Input.value model.anagram
                 , Ui.Input.onInput InputAnagramDraft
+                , if String.isEmpty model.anagram then
+                    Ui.Input.validation Nothing
+
+                  else
+                    Ui.Input.validation (getValidation anagramDiff)
                 ]
             , div [ class "h-6" ] []
             , viewCharsLeft availableChars
