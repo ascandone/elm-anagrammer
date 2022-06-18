@@ -131,6 +131,6 @@ viewCharsLeft str =
 
 viewImage : Html msg
 viewImage =
-    div [ class "w-64" ]
+    div [ class "w-64 h-64" ]
         [ img [ Html.Attributes.src "https://i.imgur.com/xCXTHxx.jpg" ] []
         ]
