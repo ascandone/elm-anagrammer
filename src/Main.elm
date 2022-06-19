@@ -95,6 +95,7 @@ view model =
             [ Ui.Input.view
                 [ Ui.Input.label "Name"
                 , Ui.Input.placeholder "John Doe"
+                , Ui.Input.spellcheck False
                 , Ui.Input.value model.name
                 , Ui.Input.autofocus True
                 , Ui.Input.onInput InputName
@@ -103,6 +104,7 @@ view model =
             , Ui.Input.view
                 [ Ui.Input.label "Anagram"
                 , Ui.Input.placeholder "doe john"
+                , Ui.Input.spellcheck False
                 , Ui.Input.value model.anagram
                 , Ui.Input.onInput InputAnagramDraft
                 , if String.isEmpty model.anagram then

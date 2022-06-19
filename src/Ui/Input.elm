@@ -4,6 +4,7 @@ module Ui.Input exposing
     , label
     , onInput
     , placeholder
+    , spellcheck
     , validation
     , value
     , view
@@ -29,6 +30,11 @@ attribute attr_ =
 placeholder : String -> Attribute msg
 placeholder =
     attribute << Html.Attributes.placeholder
+
+
+spellcheck : Bool -> Attribute msg
+spellcheck =
+    attribute << Html.Attributes.spellcheck
 
 
 autofocus : Bool -> Attribute msg
