@@ -135,7 +135,7 @@ viewLabelContent labelText validation_ =
 viewInput : Config msg -> Html msg
 viewInput config =
     Html.div
-        [ class "border rounded-md focus-within:ring"
+        [ class "border rounded-md focus-within:ring shadow-sm transition-all duration-100"
         , class "flex items-center"
         , class <|
             case config.validation of
@@ -150,7 +150,7 @@ viewInput config =
         ]
         [ Html.Extra.concatAttributes Html.input
             config.inputAttributes
-            [ class "px-4 py-2 transition-colors rounded-md  w-full  focus:outline-none  shadow-sm"
+            [ class "px-4 py-2 rounded-md w-full focus:outline-none"
             ]
             []
         , case config.validation of
