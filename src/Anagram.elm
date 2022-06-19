@@ -1,37 +1,37 @@
 module Anagram exposing (diff)
 
-import Multiset exposing (Multiset)
+import List.Extra
 
 
-strToMultiset : String -> Multiset Char
-strToMultiset str =
+normalize : String -> String
+normalize str =
     str
         |> String.toLower
-        |> String.filter (\ch -> ch /= ' ')
-        |> String.toList
-        |> Multiset.fromList
+        |> String.filter Char.isAlpha
 
 
-strDiff : Multiset Char -> Multiset Char -> String
-strDiff a b =
-    Multiset.diff a b
-        |> Multiset.toList
+{-| s1 - s2
+-}
+strDiffSimple : String -> String -> String
+strDiffSimple s1 s2 =
+    s2
+        |> String.foldl List.Extra.removeFirst (String.toList s1)
         |> String.fromList
 
 
 diff : String -> String -> ( String, String )
 diff source draft =
     let
-        sourceMultiSet =
-            strToMultiset source
+        source_ =
+            normalize source
 
-        draftMultiSet =
-            strToMultiset draft
+        draft_ =
+            normalize draft
 
         sourceMinusDraft =
-            strDiff sourceMultiSet draftMultiSet
+            strDiffSimple source_ draft_
 
         draftMinusSource =
-            strDiff draftMultiSet sourceMultiSet
+            strDiffSimple draft_ source_
     in
     ( sourceMinusDraft, draftMinusSource )
