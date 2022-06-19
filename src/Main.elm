@@ -53,12 +53,11 @@ withConfettiEffect ( model, cmd ) =
         anagramDiff =
             Anagram.diff model.name model.anagram
     in
-    case anagramDiff of
-        ( "", "" ) ->
-            ( model, Cmd.batch [ Ports.confetti (), cmd ] )
+    if model.anagram /= "" && anagramDiff == ( "", "" ) then
+        ( model, Cmd.batch [ Ports.confetti (), cmd ] )
 
-        _ ->
-            ( model, cmd )
+    else
+        ( model, cmd )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
