@@ -1,6 +1,6 @@
 {
-  "name": "elm-template",
   "version": "0.0.1",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "parcel index.html",
