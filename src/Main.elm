@@ -4,6 +4,7 @@ import Anagram
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class)
+import Ports
 import Ui.Input
 
 
@@ -46,18 +47,33 @@ filterInput =
     String.filter (\ch -> Char.isAlpha ch || ch == ' ')
 
 
+withConfettiEffect : ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
+withConfettiEffect ( model, cmd ) =
+    let
+        anagramDiff =
+            Anagram.diff model.name model.anagram
+    in
+    case anagramDiff of
+        ( "", "" ) ->
+            ( model, Cmd.batch [ Ports.confetti (), cmd ] )
+
+        _ ->
+            ( model, cmd )
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    case msg of
-        InputName value ->
-            ( { model | name = filterInput value }
-            , Cmd.none
-            )
+    withConfettiEffect <|
+        case msg of
+            InputName value ->
+                ( { model | name = filterInput value }
+                , Cmd.none
+                )
 
-        InputAnagramDraft value ->
-            ( { model | anagram = filterInput value }
-            , Cmd.none
-            )
+            InputAnagramDraft value ->
+                ( { model | anagram = filterInput value }
+                , Cmd.none
+                )
 
 
 subscriptions : Model -> Sub Msg
